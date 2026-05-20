@@ -11,8 +11,13 @@ export default {
       },
       matchId: {
         type: Sequelize.INTEGER,
-        allowNull:false,
-        unique:true
+        allowNull: false,
+        references: {
+          model: 'Matches',
+          key: 'id'
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       },
       actor: {
         type: Sequelize.STRING

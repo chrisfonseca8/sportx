@@ -1,18 +1,18 @@
-import experss from 'express'
-import dotenv from 'dotenv'
-
-const app = experss();
+import express from 'express';
+import dotenv from 'dotenv';
 
 dotenv.config();
-console.log(process.env.PORT);
 
-app.use(experss.json());
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-app.get('/',(req,res)=>{
-    res.send("working proerly");
-})
+app.use(express.json());
 
-app.listen(process.env.PORT,()=>[
-    console.log(`listning on port : ${process.env.PORT}`)
-])
+app.get('/', (req, res) => {
+    res.send('working properly');
+});
+
+app.listen(PORT, () => {
+    console.log(`listening on port: ${PORT}`);
+});
 

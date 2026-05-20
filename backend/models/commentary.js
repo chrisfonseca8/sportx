@@ -10,17 +10,16 @@ export default (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.belongsTo(models.Match,{
-        foreignKey:"matchId",
-        onDelete:'CASCADE'
+      this.belongsTo(models.Match, {
+        foreignKey: "matchId",
+        onDelete: 'CASCADE'
       })
     }
   }
   Commentary.init({
     matchId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      unique: true
+      allowNull: false
     },
     actor: DataTypes.STRING,
     message: DataTypes.STRING,
