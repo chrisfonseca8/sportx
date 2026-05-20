@@ -1,15 +1,15 @@
 {
   "development": {
     "username": "root",
-    "password": "Anthonyjsf007",
-    "database": "spoetx",
+    "password": "Anthonyjsf007#",
+    "database": "sportx",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
-    "password": "Anthonyjsf007",
-    "database": "spoetx",
+    "password": "Anthonyjsf007#",
+    "database": "sportx",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
