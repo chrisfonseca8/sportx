@@ -2,15 +2,16 @@
 
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath, pathToFileURL } from 'url';
+import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 import Sequelize from 'sequelize';
+import matchModel from './match.js';
+import commentaryModel from './commentary.js';
 
 dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
 const config = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'config', 'config.json'), 'utf8'))[env];
 
@@ -20,17 +21,8 @@ const sequelize = config.use_env_variable
 
 const db = {};
 
-const modelFiles = fs
-    .readdirSync(__dirname)
-    .filter(file => file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js');
-
-for (const file of modelFiles) {
-    const modelPath = path.join(__dirname, file);
-    const module = await import(pathToFileURL(modelPath).href);
-    const modelDef = module.default;
-    const model = modelDef(sequelize, Sequelize.DataTypes);
-    db[model.name] = model;
-}
+db.Match = matchModel(sequelize, Sequelize.DataTypes);
+db.Commentary = commentaryModel(sequelize, Sequelize.DataTypes);
 
 Object.keys(db).forEach(modelName => {
     if (db[modelName].associate) {
