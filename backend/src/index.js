@@ -1,7 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import apiRoutes from '../routes/index.js';
-import {match_cron} from '../cron/cronJobs.js';
+import { match_cron } from '../cron/cronJobs.js';
 import http from 'http';
 import { attachWebsocketServer } from './server.js';
 
@@ -14,14 +14,16 @@ const HOST = process.env.HOST || '0.0.0.0';
 const server = http.createServer(app);
 
 app.use(express.json());
+app.use('/api', apiRoutes);
 
 app.get('/', (req, res) => {
     res.send('working properly');
 });
 
-const { broadcastMatchCreated } = attachWebsocketServer(server);
+const { broadcastMatchCreated,broadcastComments } = attachWebsocketServer(server);
 
 app.locals.broadcastMatchCreated = broadcastMatchCreated;
+app.locals.broadcastComments = broadcastComments;
 
 server.listen(PORT, HOST, () => {
     const base_url =
