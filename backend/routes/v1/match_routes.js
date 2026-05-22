@@ -30,11 +30,16 @@ router.post('/', validation(createMatchSchema), async (req, res) => {
             StartTime
         });
 
-        if(res.app.locals.broadcastMatchCreated){
-            res.app.locals.broadcastMatchCreated(response);
+        if (res.app.locals.broadcastMatchCreated) {
+            try {
+                res.app.locals.broadcastMatchCreated(response);
+                console.log("res.app.locals was hit : ")
 
-            console.log("res.app.locals was hit : ")
-            console.log(res.app.locals.broadcastMatchCreated(response));
+            } catch (error) {
+                console.log("some error in loading res.app.locals.broadcastMatchCreated ")
+            }
+
+            // console.log(res.app.locals.broadcastMatchCreated(response));
         }
 
         return res.status(201).json({
