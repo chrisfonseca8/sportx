@@ -57,10 +57,11 @@ function handelMessage(socket, data) {
     try {
         message = JSON.parse(data.toString());
     } catch (error) {
-        sendJson(socket, { type: "error", message: "invalid data" })
+        sendJson(socket, { type: "error", message: "invalid data" });
+        return;
     }
 
-    if (message.type === "success" && Number.isInteger(message.matchId)) {
+    if (message.type === "subcribe" && Number.isInteger(message.matchId)) {
         subcribe(message.matchId, socket);
         socket.subcriptions.add(message.matchId)
         sendJson(socket, { type: "subcribed", matchId: message.matchId });

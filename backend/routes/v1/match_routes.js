@@ -101,7 +101,7 @@ router.post('/:matchId/commentary', validation(createCommentarySchema), async (r
     } catch (error) {
         return res.status(500).json({
             success: false,
-            message: error
+            message: error.message
         });
     }
 });

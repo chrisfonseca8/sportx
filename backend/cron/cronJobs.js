@@ -9,7 +9,7 @@ const { Match } = db;
 
 export const match_cron = () => {
 
-    cron.schedule('*/1 * * * *', async () => {
+    cron.schedule('*/30 * * * * *', async () => {
 
         try {
 
@@ -21,11 +21,16 @@ export const match_cron = () => {
 
                 const startTime = new Date(match.StartTime).getTime();
 
-                const durationInMinutes = match_duration[match.Sport];
+                const durationInMinutes = Number(match_duration);
+
+                //console.log(durationInMinutes);
+                console.log(startTime)
 
                 // convert minutes -> milliseconds
                 const endTime =
                     startTime + (durationInMinutes * 60 * 1000);
+
+                console.log(endTime);
 
                 if (currentTime > endTime) {
 
@@ -44,6 +49,10 @@ export const match_cron = () => {
                     currentTime <= endTime
                 ) {
 
+                    if (match.Status === LIVE) {
+                        continue;
+                    }
+
                     await Match.update(
                         {
                             Status: LIVE
@@ -60,17 +69,17 @@ export const match_cron = () => {
                 }
 
 
-                console.log("Current:", new Date(currentTime));
+                // console.log("Current:", new Date(currentTime));
 
-                console.log(
-                    "Start:",
-                    new Date(startTime)
-                );
+                // console.log(
+                //     "Start:",
+                //     new Date(startTime)
+                // );
 
-                console.log(
-                    "End:",
-                    new Date(endTime)
-                );
+                // console.log(
+                //     "End:",
+                //     new Date(endTime)
+                // );
             }
 
         } catch (error) {
